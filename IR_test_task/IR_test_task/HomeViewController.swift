@@ -32,6 +32,7 @@ class ViewController: UIViewController {
 
     @IBAction func loginAction(_ sender: Any) {
         if loginTextField.text == "" || passwordTextField.text == "" || captchaTextField.text == "" {
+            showAlert(for: "Пустые поля")
             return
         } else {
             viewModel.login(with: loginTextField.text!, password: passwordTextField.text!, captcha: captchaTextField.text!)
@@ -82,5 +83,24 @@ extension ViewController : UITextFieldDelegate {
         passwordTextField.resignFirstResponder()
         captchaTextField.resignFirstResponder()
         return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == captchaTextField {
+            UIView.animate(withDuration: 0.5, delay: 0) {
+                self.view.frame.origin.y -= 200
+
+            }
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == captchaTextField {
+            UIView.animate(withDuration: 0.5, delay: 0) {
+                self.view.frame.origin.y = 0
+
+            }
+
+        }
     }
 }
